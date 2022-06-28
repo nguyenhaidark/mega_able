@@ -210,17 +210,21 @@
                         </div>
                         <!-- Page-header end -->
                          <div class="pcoded-inner-content">
-                          <table class="table table-hover">
+                          <a href="category/add.html" class="btn btn-primary">Add Category</a>
+                            <hr>
+                          <table class="table table-hover" id ="tblcategory">
                               <thead>
                                   <tr>
                                       <th>ID</th>
                                        <th>NAME</th>
+                                       <th>STATUS</th>
+                                       <th>CREATEDDATE</th>
+                                       <th>UPDATEDDATE</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <tr>
-                                      <td>1</td>
-                                      <td>dang</td>
+
                                   </tr>
                               </tbody>
                           </table>
@@ -300,6 +304,53 @@
 <script src="assets/js/vertical-layout.min.js "></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+<script>
+    $(function(){
+        $.ajax({
+            type:'GET',
+            url:'http://localhost:8080/category/get',
+            success: function(data){
+                var tr = "";
+                for (var i = 0; i< data.length; i++) {
+                   tr += '<tr><td>' +data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].status + '</td><td>' + data[i].createdDate + '</td><td>' + data[i].updatedDate + '</td><td><a href="#" class="btn btn-primary" onclick="editcategory(\''+ data[i].id + '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletecategory(\''+ data[i].id + '\')">Delete</a></td></tr>';
+                }
+                $('#tblcategory').append(tr);
+            },
+            error: function(msg){
+                alert(msg.statusText);
+            } 
+        });
+    // function deletecategory(id){
+    //     if (confim('Bạn có muốn xoá không?') {
+    //         $.ajax({
+    //             type:'DELTE',
+    //             url:'http://localhost:8080/category/get' +id,
+    //             success:function(msg){
+    //                 alert(msg);
+    //                 window.location.reload();                    
+    //             },
+    //             error:function(msg){
+    //                 alert(mag.statusText);
+    //             }
+    //         });
+    //     }
+    // }
+    // function editcategory(id){
+    //     $.ajax({
+    //         type:'GET',
+    //         url:'http://localhost:8080/category/get' +id,
+    //         success: function(data){
+    //             $('#name').val(data.name);
+    //             $('#status').val(data.status);
+    //             $('#myModal').modal();
+    //             $('#action').html("edit");
+    //         },
+    //         error: function(msg){
+    //             alert(msg.statusText);
+    //         }
+    //     });
+     });
+</script>
 </body>
 
 </html>
