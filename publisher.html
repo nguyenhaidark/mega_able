@@ -265,10 +265,18 @@
             type:'GET',
             url:'http://localhost:8080/publisher/get',
             success: function(data){
+                if (data[i].status==true) {
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
-                   tr += '<tr><td>' +data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].address + '</td><td>' + data[i].status + '</td><td>' + data[i].createdDate + '</td><td>' + data[i].updatedDate + '</td><td><a href="#" class="btn btn-primary" onclick="editpublisher(\''+ data[i].id + '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletepublisher(\''+ data[i].id + '\')">Delete</a></td></tr>';
+                   tr += '<tr><td>' +data[i].id + 
+                   '</td><td>' + data[i].name + 
+                   '</td><td>' + data[i].address + 
+                   '</td><td>' + data[i].status + 
+                   '</td><td>' + data[i].createdDate + 
+                   '</td><td>' + data[i].updatedDate + 
+                   '</td><td><a href="#" class="btn btn-primary" onclick="editpublisher(\''+ data[i].id + '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletepublisher(\''+ data[i].id + '\')">Delete</a></td></tr>';
                 }
+            }
                 $('#tblpublisher').append(tr);
             },
             error: function(msg){
