@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-    <!-- morris chart -->
-    <link rel="stylesheet" type="text/css" href="assets/css/morris.js/css/morris.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
@@ -210,18 +208,24 @@
                         </div>
                         <!-- Page-header end -->
                          <div class="pcoded-inner-content">
-                          <table class="table table-hover">
+                            <a href="#" class="btn btn-primary" id="btnadd">Add MOD</a>
+                            <hr>
+                          <table class="table table-hover" id="tbluser">
                               <thead>
                                   <tr>
                                       <th>ID</th>
-                                       <th>NAME</th>
+                                      <th>NAME</th>
+                                      <th>PHONE</th>
+                                      <th>ADDRESS</th>
+                                      <th>GENDER</th>
+                                      <th>STATUS</th>
+                                      <th>ROLES</th>
+                                      <th>CREATED DATE</th>
+                                      <th>UPDATED DATE</th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr>
-                                      <td>1</td>
-                                      <td>dang</td>
-                                  </tr>
+                                  
                               </tbody>
                           </table>
                         </div>
@@ -231,52 +235,61 @@
         </div>
     </div>
 
-
-
-    <!-- Warning Section Starts -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="assets/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="model-header container">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="model-title">User</h4>
+            </div>
+            <div class="modal-body">
+                <p id="action"></p>
+                <form id="formDataHtml" method="POST" enctype="multipart/form-data" action="/">
+                    <div class="form-group none" style="display: none;">
+                        id <input type="number" id="idUser" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Name <input type="text" id="name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        User name <input type="text" id="username" class="form-control"/>
+                    </div>
+                    <div class="form-group" id="divpassword">
+                       Password  <input type="text" id="password" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                       Phone <input type="number" id="phone" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Email <input type="text" id="email" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Address <input type="text" id="address" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <p>Gender</p>  
+                                <input type="radio" id="gtrue" name="gender" value="true">
+                                <label for="html">Male</label>
+                                <input type="radio" id="gfalse" name="gender" value="false">
+                                <label for="html">Female</label>
+                    </div>
+                    <div class="form-group">
+                        <p>Status</p>  
+                                <input type="radio" id="strue" name="status" value="true">
+                                <label for="html">Acceptance</label>
+                                <input type="radio" id="sfalse" name="status" value="false">
+                                <label for="html">Block</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnsave">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-    <p>Sorry for the inconvenience!</p>
 </div>
-<![endif]-->
-<!-- Warning Section Ends -->
+
 <!-- Required Jquery -->
 <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
@@ -289,17 +302,14 @@
 <!-- waves js -->
 <script src="assets/pages/waves/js/waves.min.js"></script>
 <!-- modernizr js -->
-<script type="text/javascript" src="assets/js/SmoothScroll.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
-<!-- Morris Chart js -->
-<script src="assets/js/raphael/raphael.min.js"></script>
-<script src="assets/js/morris.js/morris.js"></script>
 <!-- Custom js -->
-<script src="assets/js/morris-custom-chart.js"></script>
 <script src="assets/js/pcoded.min.js"></script>
 <script src="assets/js/vertical-layout.min.js "></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
+<script type="text/javascript" src="assets/js/function/user.js"></script>
+
 </body>
 
 </html>

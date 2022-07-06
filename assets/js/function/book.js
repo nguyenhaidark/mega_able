@@ -1,4 +1,4 @@
-getCategory();
+    getCategory();
     getAuthor();
     getPublisher();
     $(function(){
