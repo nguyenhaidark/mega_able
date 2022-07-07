@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-    <!-- morris chart -->
-    <link rel="stylesheet" type="text/css" href="assets/css/morris.js/css/morris.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
@@ -210,7 +208,7 @@
                         </div>
                         <!-- Page-header end -->
                          <div class="pcoded-inner-content">
-                                <a href="publisher/add.html" class="btn btn-primary">Add Publisher</a>   
+                                <a href="#" class="btn btn-primary" id="btnadd">Add Publisher</a>
                                 <hr>      
                           <table class="table table-hover" id ="tblpublisher">
                               <thead>
@@ -224,9 +222,6 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr>
-
-                                  </tr>
                               </tbody>
                           </table>
                         </div>
@@ -235,6 +230,42 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="model-header container">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="model-title">Book</h4>
+            </div>
+            <div class="modal-body">
+                <p id="action"></p>
+                <form id="formDataHtml" method="POST" enctype="multipart/form-data" action="/">
+                    <div class="form-group none" style="display: none;">
+                        id <input type="number" id="idPublisher" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Name <input type="text" id="name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Address <input type="text" id="address" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <p>Status</p>  
+                                <input type="radio" id="status" name="status" value="true">
+                                <label for="html">Show</label>
+                                <input type="radio" id="status" name="status" value="false">
+                                <label for="html">Hidden</label>
+                        <!-- Status <input type="text-center" name="status" class="form-control"/> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnsave">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Required Jquery -->
 <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
@@ -250,41 +281,12 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="assets/js/SmoothScroll.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
-<!-- Morris Chart js -->
-<script src="assets/js/raphael/raphael.min.js"></script>
-<script src="assets/js/morris.js/morris.js"></script>
 <!-- Custom js -->
-<script src="assets/js/morris-custom-chart.js"></script>
 <script src="assets/js/pcoded.min.js"></script>
 <script src="assets/js/vertical-layout.min.js "></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
-<script >
-    $(function(){
-        $.ajax({
-            type:'GET',
-            url:'http://localhost:8080/publisher/get',
-            success: function(data){
-                if (data[i].status==true) {
-                var tr = "";
-                for (var i = 0; i< data.length; i++) {
-                   tr += '<tr><td>' +data[i].id + 
-                   '</td><td>' + data[i].name + 
-                   '</td><td>' + data[i].address + 
-                   '</td><td>' + data[i].status + 
-                   '</td><td>' + data[i].createdDate + 
-                   '</td><td>' + data[i].updatedDate + 
-                   '</td><td><a href="#" class="btn btn-primary" onclick="editpublisher(\''+ data[i].id + '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletepublisher(\''+ data[i].id + '\')">Delete</a></td></tr>';
-                }
-            }
-                $('#tblpublisher').append(tr);
-            },
-            error: function(msg){
-                alert(msg.statusText);
-            } 
-        });
-    });
-</script>
+<script type="text/javascript" src="assets/js/function/publisher.js"></script>
 </body>
 
 </html>

@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-    <!-- morris chart -->
-    <link rel="stylesheet" type="text/css" href="assets/css/morris.js/css/morris.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
@@ -210,7 +208,7 @@
                         </div>
                         <!-- Page-header end -->
                          <div class="pcoded-inner-content">
-                          <a href="category/add.html" class="btn btn-primary">Add Category</a>
+                          <a href="#" class="btn btn-primary" id="btnadd">Add Category</a>
                             <hr>
                           <table class="table table-hover" id ="tblcategory">
                               <thead>
@@ -235,52 +233,40 @@
         </div>
     </div>
 
-
-
-    <!-- Warning Section Starts -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="assets/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="model-header container">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="model-title">Category</h4>
+            </div>
+            <div class="modal-body">
+                <p id="action"></p>
+                <form id="formDataHtml" method="POST" enctype="multipart/form-data" action="/">
+                    <div class="form-group none" style="display: none;">
+                        id <input type="number" id="idCategory" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        Name <input type="text" id="name" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <p>Status</p>  
+                                <input type="radio" id="status" name="status" value="true">
+                                <label for="html">Show</label>
+                                <input type="radio" id="status" name="status" value="false">
+                                <label for="html">Hidden</label>
+                        <!-- Status <input type="text-center" name="status" class="form-control"/> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnsave">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-    <p>Sorry for the inconvenience!</p>
 </div>
-<![endif]-->
-<!-- Warning Section Ends -->
+
 <!-- Required Jquery -->
 <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
@@ -295,62 +281,12 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="assets/js/SmoothScroll.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
-<!-- Morris Chart js -->
 <script src="assets/js/raphael/raphael.min.js"></script>
-<script src="assets/js/morris.js/morris.js"></script>
-<!-- Custom js -->
-<script src="assets/js/morris-custom-chart.js"></script>
 <script src="assets/js/pcoded.min.js"></script>
 <script src="assets/js/vertical-layout.min.js "></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
-<script>
-    $(function(){
-        $.ajax({
-            type:'GET',
-            url:'http://localhost:8080/category/get',
-            success: function(data){
-                var tr = "";
-                for (var i = 0; i< data.length; i++) {
-                   tr += '<tr><td>' +data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].status + '</td><td>' + data[i].createdDate + '</td><td>' + data[i].updatedDate + '</td><td><a href="#" class="btn btn-primary" onclick="editcategory(\''+ data[i].id + '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletecategory(\''+ data[i].id + '\')">Delete</a></td></tr>';
-                }
-                $('#tblcategory').append(tr);
-            },
-            error: function(msg){
-                alert(msg.statusText);
-            } 
-        });
-    // function deletecategory(id){
-    //     if (confim('Bạn có muốn xoá không?') {
-    //         $.ajax({
-    //             type:'DELTE',
-    //             url:'http://localhost:8080/category/get' +id,
-    //             success:function(msg){
-    //                 alert(msg);
-    //                 window.location.reload();                    
-    //             },
-    //             error:function(msg){
-    //                 alert(mag.statusText);
-    //             }
-    //         });
-    //     }
-    // }
-    // function editcategory(id){
-    //     $.ajax({
-    //         type:'GET',
-    //         url:'http://localhost:8080/category/get' +id,
-    //         success: function(data){
-    //             $('#name').val(data.name);
-    //             $('#status').val(data.status);
-    //             $('#myModal').modal();
-    //             $('#action').html("edit");
-    //         },
-    //         error: function(msg){
-    //             alert(msg.statusText);
-    //         }
-    //     });
-     });
-</script>
+<script type="text/javascript" src="assets/js/function/category.js"></script>
 </body>
 
 </html>
