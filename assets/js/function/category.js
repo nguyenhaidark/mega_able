@@ -33,13 +33,19 @@
 
         $('#btnsave').click(function(){
             var action = $('#action').html();
+            var status = document.getElementsByName('status');
+            var valstatus;
+            for(i = 0; i < status.length; i++) {
+                if(status[i].checked)
+                valstatus=status[i].value;
+            }
             if (action == "add") {
                 $.ajax({
                     type:'POST',
                     contentType:"application/json; charset=utf-8",
                     data: JSON.stringify({
                         name:$('#name').val(),
-                        status:$('#status').val()
+                        status:valstatus
                     }),
                     url:'http://localhost:8080/category/add',
                     success: function(){
@@ -56,7 +62,7 @@
                     data: JSON.stringify({
                         id:$('#idCategory').val(),
                         name:$('#name').val(),
-                        status:$('#status').val()
+                        status:valstatus
                     }),
                     url:'http://localhost:8080/category/update',
                     success: function(d){
@@ -77,8 +83,11 @@
                 $('#idCategory').val(data.id);
                 $('#name').val(data.name);
                  if (data.status==true) {
-                    document.getElementById("status").checked = true;
-                 }
+                    document.getElementById("true").checked = true;
+                }
+                else{
+                    document.getElementById("false").checked = true;
+                }
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },

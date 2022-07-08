@@ -35,6 +35,12 @@ $(function(){
 
          $('#btnsave').click(function(){
             var action = $('#action').html();
+            var status = document.getElementsByName('status');
+            var valstatus;
+            for(i = 0; i < status.length; i++) {
+                if(status[i].checked)
+                valstatus=status[i].value;
+            }
             if (action == "add") {
                 $.ajax({
                     type:'POST',
@@ -42,7 +48,7 @@ $(function(){
                     data: JSON.stringify({
                         name:$('#name').val(),
                         address:$('#address').val(),
-                        status:$('#status').val()
+                        status:valstatus
                     }),
                     url:'http://localhost:8080/publisher/add',
                     success: function(){
@@ -60,7 +66,7 @@ $(function(){
                         id:$('#idPublisher').val(),
                         name:$('#name').val(),
                         address:$('#address').val(),
-                        status:$('#status').val()
+                        status:valstatus
                     }),
                     url:'http://localhost:8080/publisher/update',
                     success: function(d){
@@ -82,8 +88,11 @@ function editPublisher(id){
                 $('#name').val(data.name);
                 $('#address').val(data.address);
                  if (data.status==true) {
-                    document.getElementById("status").checked = true;
-                 }
+                    document.getElementById("true").checked = true;
+                }
+                else{
+                    document.getElementById("false").checked = true;
+                }
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
