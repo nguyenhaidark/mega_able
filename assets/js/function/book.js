@@ -45,12 +45,18 @@
             }
             var action = $('#action').html();
             let file = document.getElementById("file");
+            var status = document.getElementsByName('status');
+            var valstatus;
+            for(i = 0; i < status.length; i++) {
+                if(status[i].checked)
+                valstatus=status[i].value;
+            }
             let formData = new FormData();
             formData.append("file",document.getElementById("file").files[0]);
             formData.append('name',$('#name').val());
             formData.append('price',$('#price').val());
             formData.append('saleprice',$('#saleprice').val());
-            formData.append('status',$('#status').val());
+            formData.append('status',valstatus);
             formData.append('quantity',$('#quantity').val());
             var cat = document.getElementById("category");
             var aut = document.getElementById("authors");
@@ -108,9 +114,6 @@
                  if (data.status==true) {
                     document.getElementById("status").checked = true;
                  }
-                // $('#categories').val(data.categories);
-                // $('#authors').val(data.authors);
-                // $('#publisher').val(data.publisher);
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
