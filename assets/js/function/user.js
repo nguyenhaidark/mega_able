@@ -1,4 +1,6 @@
-	$(function(){
+	pageNo();
+    var arr = new Array();
+    $(function(){
 		$.ajax({
             type:'GET',
             url:'http://localhost:8080/user/get',
@@ -21,7 +23,8 @@
                        }else{
                         gender="female"
                        }
-                   tr += '<tr><td>' +data[i].id + 
+                       arr.push('tr'+data[i].id);
+                   tr += '<tr id="tr'+data[i].id+'"><td>' +data[i].id + 
                    '</td><td>' + data[i].name + 
                    '</td><td>'+ data[i].phone + 
                    '</td><td>'+ data[i].address + 
@@ -33,6 +36,7 @@
                    '</td><td><a href="#" class="btn btn-primary" id="id" onclick="editUser('+ data[i].id + ')">Edit</a> <a href="#" class="btn btn-danger" id="id" onclick="deleteUser(\''+ data[i].id + '\')">Delete</a></td></tr>';
             }
                 $('#tbluser').append(tr);
+                // document.getElementById("remove").remove();
             },
             error: function(){
                 alert("Unauthorized");
@@ -165,4 +169,73 @@
                 }
             });
         }
+    }
+    function pageNo(){
+        // document.getElementById("tblTr").remove();
+        $.ajax({
+            type:'GET',
+            url:'http://localhost:8080/user/get?pageSize=100000000',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
+            success: function(data){
+                var li = "";
+                length = data.length/6;
+                var x;
+                for (var i = 0; i< length; i++) {
+                    x= +i + +1;
+                   li += '<li lass="page-item"><a onclick="pagiNate('+ i +')" class="page-link">'+ x +'</a></li>';
+            }
+                $('#pagiNation').append(li);
+            },
+            error: function(){
+                alert("Unauthorized");
+            } 
+        });
+    }
+    function pagiNate(id){
+        for (var i = 0; i < arr.length; i++) {
+            document.getElementById(arr[i]).remove();
+        }
+        arr=[];
+        $.ajax({
+            type:'GET',
+            url:'http://localhost:8080/user/get?pageNo='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
+            success: function(data){
+                var tr = "";
+                for (var i = 0; i< data.length; i++) {
+                    let roles = data[i].roles.map(r => r.name);
+                    let status;
+                    let gender;
+                    if (data[i].status==true) {
+                            status ="acceptance"
+                       }else{
+                        status="block"
+                       }
+                        if (data[i].gender==true) {
+                            gender ="male"
+                       }else{
+                        gender="female"
+                       }
+                       arr.push('tr'+data[i].id);
+                   tr += '<tr id="tr'+data[i].id+'"><td>' +data[i].id + 
+                   '</td><td>' + data[i].name + 
+                   '</td><td>'+ data[i].phone + 
+                   '</td><td>'+ data[i].address + 
+                   '</td><td>'+ gender + 
+                   '</td><td>'+ status + 
+                   '</td><td>'+ roles + 
+                   '</td><td>' + data[i].createdDate + 
+                   '</td><td>' + data[i].updatedDate + 
+                   '</td><td><a href="#" class="btn btn-primary" id="id" onclick="editUser('+ data[i].id + ')">Edit</a> <a href="#" class="btn btn-danger" id="id" onclick="deleteUser(\''+ data[i].id + '\')">Delete</a></td></tr>';
+            }
+                $('#tbluser').append(tr);
+            },
+            error: function(){
+                alert("Unauthorized");
+            } 
+        });
     }
