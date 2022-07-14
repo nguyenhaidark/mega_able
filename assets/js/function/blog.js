@@ -2,6 +2,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/blog/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -22,8 +25,8 @@
             }
                 $('#tblblog').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             } 
         });
 
@@ -58,14 +61,17 @@
                     contentType:false,
                     data: formData,
                     url:'http://localhost:8080/blog/add',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     cache : false,
                     processData: false,
                     success: function(){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }else{
               $.ajax({
@@ -73,14 +79,17 @@
                     contentType:false,
                     data: formData,
                     url:'http://localhost:8080/blog/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     cache : false,
                     processData: false,
                     success: function(d){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });  
             }
         });  
@@ -90,6 +99,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/blog/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idBlog').val(data.id);
                 $('#title').val(data.title);
@@ -103,8 +115,8 @@
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             }
         });
     }
@@ -114,6 +126,9 @@ function deleteblog(id){
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/blog/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     location.reload(); 
                 },

@@ -2,6 +2,9 @@
 		$.ajax({
             type:'GET',
             url:'http://localhost:8080/user/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -31,8 +34,8 @@
             }
                 $('#tbluser').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             } 
         });
         $('#btnadd').click(function(){
@@ -58,6 +61,9 @@
                 $.ajax({
                     type:'POST',
                     url:'http://localhost:8080/auth/signup',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     contentType: "application/json",
                     data: JSON.stringify({
                         name:$("#name").val(),
@@ -73,14 +79,17 @@
                     success:function(){
                         location.reload();  
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }else{
               $.ajax({
                     type:'PUT',
                     url:'http://localhost:8080/user/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     contentType: "application/json",
                     data: JSON.stringify({
                         id:$("#idUser").val(),
@@ -97,9 +106,9 @@
                     success:function(){
                         location.reload();  
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });  
             }
         });
@@ -110,6 +119,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/user/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idUser').val(data.id);
                 $('#name').val(data.name);
@@ -132,8 +144,8 @@
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             }
         });
     }
@@ -142,6 +154,9 @@
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/user/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     window.location.reload();
                 },

@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-    <!-- morris chart -->
-    <link rel="stylesheet" type="text/css" href="assets/css/morris.js/css/morris.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
@@ -119,6 +117,9 @@
                                     <i class="ti-fullscreen"></i>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onclick="logout()" class="waves-effect waves-light text-warning">Log out</a>
+                            </li>
                         </ul>
                         
                     </div>
@@ -202,7 +203,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
                                         <div class="page-header-title">
-                                            <h5 class="m-b-10">Welcome To Admin Page</h5>
+                                            <h5 id="welcome" class="m-b-10"></h5>
                                             <p class="m-b-0">Wish you a new day with many orders</p>
                                         </div>
                                     </div>
@@ -211,20 +212,6 @@
                         </div>
                         <!-- Page-header end -->
                          <div class="pcoded-inner-content">
-                          <table class="table table-hover">
-                              <thead>
-                                  <tr>
-                                      <th>ID</th>
-                                       <th>NAME</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <tr>
-                                      <td>1</td>
-                                      <td>dang</td>
-                                  </tr>
-                              </tbody>
-                          </table>
                         </div>
                     </div>
                 </div>
@@ -232,52 +219,13 @@
         </div>
     </div>
 
+<script>
+document.getElementById("welcome").innerHTML ="Welcome "+ localStorage.getItem("name");
+</script>
 
 
-    <!-- Warning Section Starts -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="assets/images/browser/chrome.png" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="assets/images/browser/firefox.png" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="assets/images/browser/opera.png" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="assets/images/browser/safari.png" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="assets/images/browser/ie.png" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
-<![endif]-->
-<!-- Warning Section Ends -->
+<script type="text/javascript" src="assets/js/function/checklogin.js"></script>
+<script type="text/javascript" src="assets/js/function/login.js"></script>
 <!-- Required Jquery -->
 <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
@@ -290,13 +238,10 @@
 <!-- waves js -->
 <script src="assets/pages/waves/js/waves.min.js"></script>
 <!-- modernizr js -->
-<script type="text/javascript" src="assets/js/SmoothScroll.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
 <!-- Morris Chart js -->
 <script src="assets/js/raphael/raphael.min.js"></script>
-<script src="assets/js/morris.js/morris.js"></script>
 <!-- Custom js -->
-<script src="assets/js/morris-custom-chart.js"></script>
 <script src="assets/js/pcoded.min.js"></script>
 <script src="assets/js/vertical-layout.min.js "></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>

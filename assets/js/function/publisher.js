@@ -2,6 +2,9 @@ $(function(){
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/publisher/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -21,9 +24,9 @@ $(function(){
                 }
                 $('#tblpublisher').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
-            } 
+            error: function(){
+                alert("Unauthorized");
+            }
         });
 
         $('#btnadd').click(function(){
@@ -51,12 +54,15 @@ $(function(){
                         status:valstatus
                     }),
                     url:'http://localhost:8080/publisher/add',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     success: function(){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }else{
               $.ajax({
@@ -69,12 +75,15 @@ $(function(){
                         status:valstatus
                     }),
                     url:'http://localhost:8080/publisher/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     success: function(d){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });  
             }
         });  
@@ -83,6 +92,9 @@ function editPublisher(id){
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/publisher/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idPublisher').val(data.id);
                 $('#name').val(data.name);
@@ -96,10 +108,9 @@ function editPublisher(id){
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
-            }
-        });
+            error: function(){
+                alert("Unauthorized");
+            }        });
     }
 
 function deletePublisher(id){
@@ -107,6 +118,9 @@ function deletePublisher(id){
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/publisher/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     location.reload(); 
                 },

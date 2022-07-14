@@ -5,6 +5,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/book/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -27,8 +30,8 @@
             }
                 $('#tblbook').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             } 
         });
 
@@ -73,14 +76,17 @@
                     contentType:false,
                     data: formData,
                     url:'http://localhost:8080/book/add',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     cache : false,
                     processData: false,
                     success:function(){
                         location.reload();  
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }
             else{
@@ -89,14 +95,17 @@
                     contentType:false,
                     data: formData,
                     url:'http://localhost:8080/book/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     cache : false,
                     processData: false,
                     success:function(){
                         location.reload();  
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });  
             }
         });
@@ -105,6 +114,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/book/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idBook').val(data.id);
                 $('#name').val(data.name);
@@ -117,8 +129,8 @@
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             }
         });
     }
@@ -170,6 +182,9 @@
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/book/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     alert(d);
                     window.location.reload();

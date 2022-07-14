@@ -2,6 +2,9 @@ $(function(){
 		$.ajax({
             type:'GET',
             url:'http://localhost:8080/bill/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -22,9 +25,9 @@ $(function(){
             }
                 $('#tblbill').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
-            } 
+            error: function(){
+                alert("Unauthorized");
+            }
         });
          $('#btnsave').click(function(){
          	var action = $('#action').html();
@@ -45,14 +48,17 @@ $(function(){
                 $.ajax({
                     type:'PUT',
                     url:'http://localhost:8080/bill/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     contentType: "application/json",
                     data:JSON.stringify(object),
                     success:function(){
                         location.reload();  
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }
         });
@@ -62,6 +68,9 @@ function editBill(id){
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/bill/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idBill').val(data.id);
                 if (data.status==true) {
@@ -73,8 +82,8 @@ function editBill(id){
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             }
         });
     }
@@ -84,6 +93,9 @@ function editBill(id){
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/bill/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     window.location.reload();
                 },

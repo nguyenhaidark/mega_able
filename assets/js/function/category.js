@@ -2,6 +2,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/category/get',
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success: function(data){
                 var tr = "";
                 for (var i = 0; i< data.length; i++) {
@@ -20,9 +23,9 @@
                 }
                 $('#tblcategory').append(tr);
             },
-            error: function(msg){
-                alert(msg.statusText);
-            } 
+            error: function(){
+                alert("Unauthorized");
+            }
         });
 
         $('#btnadd').click(function(){
@@ -48,12 +51,15 @@
                         status:valstatus
                     }),
                     url:'http://localhost:8080/category/add',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     success: function(){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });
             }else{
               $.ajax({
@@ -65,12 +71,15 @@
                         status:valstatus
                     }),
                     url:'http://localhost:8080/category/update',
+                    beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                     success: function(d){
                         location.reload(); 
                     },
-                    error: function(msg){
-                        alert(msg.statusText);
-                    }
+                    error: function(){
+                alert("Unauthorized");
+            }
                 });  
             }
         });  
@@ -79,6 +88,9 @@
         $.ajax({
             type:'GET',
             url:'http://localhost:8080/category/findById?id='+id,
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
             success:function(data){
                 $('#idCategory').val(data.id);
                 $('#name').val(data.name);
@@ -91,8 +103,8 @@
                 $('#myModal').modal('show');
                 $('#action').html('edit')
             },
-            error:function(msg){
-                alert(msg.statusText);
+            error: function(){
+                alert("Unauthorized");
             }
         });
     }
@@ -102,6 +114,9 @@ function deletecategory(id){
             $.ajax({
                 type:'DELETE',
                 url:'http://localhost:8080/category/delete?id='+id,
+                beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("key"));
+            },
                 success:function(d){
                     location.reload(); 
                 },
