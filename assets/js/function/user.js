@@ -55,7 +55,6 @@ $(function () {
           "')\">Delete</a></td></tr>";
       }
       $("#tbluser").append(tr);
-      // document.getElementById("remove").remove();
     },
     error: function () {
       alert("Unauthorized");
@@ -198,7 +197,6 @@ function deleteUser(id) {
   }
 }
 function pageNo() {
-  // document.getElementById("tblTr").remove();
   $.ajax({
     type: "GET",
     url: "http://localhost:8080/user/get?pageSize=100000000",

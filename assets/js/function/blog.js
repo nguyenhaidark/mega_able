@@ -1,3 +1,5 @@
+pageNo();
+var arr = new Array();
 $(function () {
   $.ajax({
     type: "GET",
@@ -17,13 +19,18 @@ $(function () {
         } else {
           status = "hidden";
         }
+        arr.push("tr" + data[i].id);
         tr +=
-          "<tr><td>" +
+          '<tr id="tr' +
+          data[i].id +
+          '"><td>' +
           data[i].id +
           "</td><td>" +
           data[i].title +
           "</td><td>" +
-          data[i].content +
+          data[i].description.substring(0, 10).concat("...") +
+          "</td><td>" +
+          data[i].content.substring(0, 20).concat("...") +
           "</td><td>" +
           '<img src="http://localhost:8080/image/' +
           data[i].fileName +
@@ -69,8 +76,10 @@ $(function () {
       formData.append("id", $("#idBlog").val());
     }
     formData.append("title", $("#title").val());
+    formData.append("description", $("#description").val());
     formData.append("content", $("#content").val());
     formData.append("file", document.getElementById("file").files[0]);
+    formData.append("status", valstatus);
     if (action == "add") {
       $.ajax({
         type: "POST",
@@ -130,6 +139,7 @@ function editblog(id) {
     success: function (data) {
       $("#idBlog").val(data.id);
       $("#title").val(data.title);
+      $("#description").val(data.description);
       $("#content").val(data.content);
       if (data.status == true) {
         document.getElementById("true").checked = true;
@@ -164,4 +174,89 @@ function deleteblog(id) {
       },
     });
   }
+}
+function pageNo() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/blog/get?pageSize=100000000",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var li = "";
+      length = data.length / 6;
+      var x;
+      for (var i = 0; i < length; i++) {
+        x = +i + +1;
+        li +=
+          '<li lass="page-item"><a onclick="pagiNate(' +
+          i +
+          ')" class="page-link">' +
+          x +
+          "</a></li>";
+      }
+      $("#pagiNation").append(li);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
+}
+function pagiNate(id) {
+  for (var i = 0; i < arr.length; i++) {
+    document.getElementById(arr[i]).remove();
+  }
+  arr = [];
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/blog/get?pageNo=" + id,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var tr = "";
+      for (var i = 0; i < data.length; i++) {
+        let status;
+        if (data[i].status == true) {
+          status = "show";
+        } else {
+          status = "hidden";
+        }
+        arr.push("tr" + data[i].id);
+        tr +=
+          '<tr id="tr' +
+          data[i].id +
+          data[i].id +
+          "</td><td>" +
+          data[i].title +
+          "</td><td>" +
+          data[i].content +
+          "</td><td>" +
+          '<img src="http://localhost:8080/image/' +
+          data[i].fileName +
+          '" alt="Trulli" width="50" height="33">' +
+          "</td><td>" +
+          status +
+          "</td><td>" +
+          data[i].createdDate +
+          "</td><td>" +
+          data[i].updatedDate +
+          '</td><td><a href="#" class="btn btn-primary" onclick="editblog(\'' +
+          data[i].id +
+          '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deleteblog(\'' +
+          data[i].id +
+          "')\">Delete</a></td></tr>";
+      }
+      $("#tblblog").append(tr);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
 }

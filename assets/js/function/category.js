@@ -1,3 +1,5 @@
+pageNo();
+var arr = new Array();
 $(function () {
   $.ajax({
     type: "GET",
@@ -17,8 +19,11 @@ $(function () {
         } else {
           status = "hidden";
         }
+        arr.push("tr" + data[i].id);
         tr +=
-          "<tr><td>" +
+          '<tr id="tr' +
+          data[i].id +
+          '"><td>' +
           data[i].id +
           "</td><td>" +
           data[i].name +
@@ -148,4 +153,84 @@ function deletecategory(id) {
       },
     });
   }
+}
+function pageNo() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/category/get?pageSize=100000000",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var li = "";
+      length = data.length / 6;
+      var x;
+      for (var i = 0; i < length; i++) {
+        x = +i + +1;
+        li +=
+          '<li lass="page-item"><a onclick="pagiNate(' +
+          i +
+          ')" class="page-link">' +
+          x +
+          "</a></li>";
+      }
+      $("#pagiNation").append(li);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
+}
+function pagiNate(id) {
+  for (var i = 0; i < arr.length; i++) {
+    document.getElementById(arr[i]).remove();
+  }
+  arr = [];
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/category/get?pageNo=" + id,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var tr = "";
+      for (var i = 0; i < data.length; i++) {
+        let status;
+        if (data[i].status == true) {
+          status = "show";
+        } else {
+          status = "hidden";
+        }
+        arr.push("tr" + data[i].id);
+        tr +=
+          '<tr id="tr' +
+          data[i].id +
+          '"><td>' +
+          data[i].id +
+          "</td><td>" +
+          data[i].name +
+          "</td><td>" +
+          status +
+          "</td><td>" +
+          data[i].createdDate +
+          "</td><td>" +
+          data[i].updatedDate +
+          '</td><td><a href="#" class="btn btn-primary" onclick="editcategory(\'' +
+          data[i].id +
+          '\')">Edit</a> <a href="#" class="btn btn-danger" onclick="deletecategory(\'' +
+          data[i].id +
+          "')\">Delete</a></td></tr>";
+      }
+      $("#tblcategory").append(tr);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
 }

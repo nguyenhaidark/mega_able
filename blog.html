@@ -324,8 +324,9 @@
                     <tr>
                       <th>ID</th>
                       <th>TITLE</th>
+                      <th>DESCRIPTION</th>
                       <th>CONTENT</th>
-                      <th>FILENAME</th>
+                      <th>IMAGE</th>
                       <th>SUTATUS</th>
                       <th>CREATEDDATE</th>
                       <th>UPDATEDDATE</th>
@@ -335,6 +336,12 @@
                     <tr></tr>
                   </tbody>
                 </table>
+              </div>
+              <div class="container">
+                <nav aria-label="...">
+                  <ul class="pagination pagination-lg" id="pagiNation"></ul>
+                </nav>
+                <br />
               </div>
             </div>
           </div>
@@ -362,6 +369,9 @@
               </div>
               <div class="form-group">
                 Title <input type="text" id="title" class="form-control" />
+              </div>
+              <div class="form-group">
+                Description <input type="text" id="description" class="form-control" />
               </div>
               <div class="form-group">
                 Cotent <input type="text" id="content" class="form-control" />

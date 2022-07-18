@@ -1,6 +1,8 @@
 getCategory();
 getAuthor();
 getPublisher();
+pageNo();
+var arr = new Array();
 $(function () {
   $.ajax({
     type: "GET",
@@ -20,8 +22,11 @@ $(function () {
         } else {
           text = "hidden";
         }
+        arr.push("tr" + data[i].id);
         tr +=
-          "<tr><td>" +
+          '<tr id="tr' +
+          data[i].id +
+          '"><td>' +
           data[i].id +
           "</td><td>" +
           data[i].name +
@@ -229,4 +234,94 @@ function deleteBook(id) {
       },
     });
   }
+}
+function pageNo() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/book/get?pageSize=100000000",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var li = "";
+      length = data.length / 6;
+      var x;
+      for (var i = 0; i < length; i++) {
+        x = +i + +1;
+        li +=
+          '<li lass="page-item"><a onclick="pagiNate(' +
+          i +
+          ')" class="page-link">' +
+          x +
+          "</a></li>";
+      }
+      $("#pagiNation").append(li);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
+}
+function pagiNate(id) {
+  for (var i = 0; i < arr.length; i++) {
+    document.getElementById(arr[i]).remove();
+  }
+  arr = [];
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/book/get?pageNo=" + id,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("key")
+      );
+    },
+    success: function (data) {
+      var tr = "";
+      for (var i = 0; i < data.length; i++) {
+        let text;
+        if (data[i].status == true) {
+          text = "show";
+        } else {
+          text = "hidden";
+        }
+        arr.push("tr" + data[i].id);
+        tr +=
+          '<tr id="tr' +
+          data[i].id +
+          '"><td>' +
+          data[i].id +
+          "</td><td>" +
+          data[i].name +
+          "</td><td>" +
+          '<img src="http://localhost:8080/image/' +
+          data[i].fileName +
+          '" alt="Trulli" width="50" height="33">' +
+          "</td><td>" +
+          data[i].price +
+          "</td><td>" +
+          data[i].saleprice +
+          "</td><td>" +
+          data[i].quantity +
+          "</td><td>" +
+          text +
+          "</td><td>" +
+          data[i].createdDate +
+          "</td><td>" +
+          data[i].updatedDate +
+          '</td><td><a href="#" class="btn btn-primary" id="id" onclick="editBook(' +
+          data[i].id +
+          ')">Edit</a> <a href="#" class="btn btn-danger" id="id" onclick="deleteBook(\'' +
+          data[i].id +
+          "')\">Delete</a></td></tr>";
+      }
+      $("#tblbook").append(tr);
+    },
+    error: function () {
+      alert("Unauthorized");
+    },
+  });
 }
